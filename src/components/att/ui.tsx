@@ -41,12 +41,12 @@ export function StatCard({
       onClick={onClick}
       disabled={!onClick}
       className={cn(
-        "relative overflow-hidden rounded-lg border bg-card p-4 text-left transition-colors",
-        onClick && "hover:border-foreground/30",
-        active && "border-primary",
+        "surface-3d tilt-3d relative overflow-hidden rounded-xl border p-4 text-left",
+        active && "glow-primary border-primary",
       )}
     >
       <span className={cn("absolute left-0 top-0 h-full w-1", bar)} />
+      <span className={cn("pointer-events-none absolute -right-8 -top-8 h-24 w-24 rounded-full opacity-20 blur-2xl", bar)} />
       <div className="text-xs font-medium uppercase tracking-wider text-muted-foreground">{label}</div>
       <div className="mt-2 font-display text-3xl font-semibold tabular">{value}</div>
       {hint && <div className="mt-1 text-xs text-muted-foreground">{hint}</div>}
@@ -56,7 +56,7 @@ export function StatCard({
 
 export function Panel({ title, actions, children, className }: { title?: ReactNode; actions?: ReactNode; children: ReactNode; className?: string }) {
   return (
-    <section className={cn("rounded-lg border bg-card", className)}>
+    <section className={cn("surface-3d rounded-xl border", className)}>
       {(title || actions) && (
         <header className="flex items-center justify-between gap-3 border-b px-4 py-3">
           <h2 className="font-display text-sm font-semibold">{title}</h2>

@@ -90,9 +90,9 @@ function AttendanceLayout() {
   return (
     <AppContext.Provider value={ctx}>
       <div className="flex min-h-screen">
-        <aside className="sticky top-0 hidden h-screen w-60 shrink-0 flex-col border-r bg-sidebar md:flex">
+        <aside className="sticky top-0 hidden h-screen w-60 shrink-0 flex-col border-r bg-sidebar/80 backdrop-blur-xl md:flex">
           <div className="flex items-center gap-2.5 border-b border-sidebar-border px-4 py-4">
-            <div className="grid h-8 w-8 place-items-center rounded-md bg-primary text-primary-foreground"><Clock3 className="h-4 w-4" /></div>
+            <div className="glow-primary grid h-8 w-8 place-items-center rounded-lg bg-primary text-primary-foreground"><Clock3 className="h-4 w-4" /></div>
             <div className="leading-tight">
               <div className="font-display text-sm font-semibold">Attendance Vala</div>
               <div className="max-w-[150px] truncate text-[11px] text-muted-foreground">{ctx.orgName}</div>

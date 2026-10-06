@@ -87,7 +87,7 @@ function AuthPage() {
           </p>
           <div className="mt-10 grid grid-cols-3 gap-3 font-mono text-xs">
             {["CHECK_IN", "BREAK", "CHECK_OUT"].map((t, i) => (
-              <div key={t} className="rounded-md border bg-card/50 p-3">
+              <div key={t} className="surface-3d tilt-3d rounded-lg border p-3">
                 <div className="text-muted-foreground">0{i + 1}</div>
                 <div className="mt-1 text-primary">{t}</div>
               </div>
@@ -98,7 +98,7 @@ function AuthPage() {
       </aside>
 
       <main className="flex items-center justify-center p-6">
-        <form onSubmit={onSubmit} className="w-full max-w-sm space-y-5">
+        <form onSubmit={onSubmit} className="surface-3d w-full max-w-sm space-y-5 rounded-2xl border p-7">
           <div>
             <h2 className="font-display text-2xl font-semibold">Sign in</h2>
             <p className="mt-1 text-sm text-muted-foreground">Use your account and organization license.</p>
