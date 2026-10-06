@@ -13,6 +13,7 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
 import { Route as AuthRouteImport } from './routes/auth'
 import { Route as AuthenticatedAttendanceRouteRouteImport } from './routes/_authenticated/attendance/route'
+import { Route as AuthenticatedAttendanceDashboardRouteImport } from './routes/_authenticated/attendance/dashboard'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -34,35 +35,45 @@ const AuthenticatedAttendanceRouteRoute =
     path: '/attendance',
     getParentRoute: () => AuthenticatedRouteRoute,
   } as any)
+const AuthenticatedAttendanceDashboardRoute =
+  AuthenticatedAttendanceDashboardRouteImport.update({
+    id: '/dashboard',
+    path: '/dashboard',
+    getParentRoute: () => AuthenticatedAttendanceRouteRoute,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
-  '/attendance': typeof AuthenticatedAttendanceRouteRoute
+  '/attendance': typeof AuthenticatedAttendanceRouteRouteWithChildren
+  '/attendance/dashboard': typeof AuthenticatedAttendanceDashboardRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
-  '/attendance': typeof AuthenticatedAttendanceRouteRoute
+  '/attendance': typeof AuthenticatedAttendanceRouteRouteWithChildren
+  '/attendance/dashboard': typeof AuthenticatedAttendanceDashboardRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/_authenticated': typeof AuthenticatedRouteRouteWithChildren
   '/auth': typeof AuthRoute
-  '/_authenticated/attendance': typeof AuthenticatedAttendanceRouteRoute
+  '/_authenticated/attendance': typeof AuthenticatedAttendanceRouteRouteWithChildren
+  '/_authenticated/attendance/dashboard': typeof AuthenticatedAttendanceDashboardRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/auth' | '/attendance'
+  fullPaths: '/' | '/auth' | '/attendance' | '/attendance/dashboard'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/auth' | '/attendance'
+  to: '/' | '/auth' | '/attendance' | '/attendance/dashboard'
   id:
     | '__root__'
     | '/'
     | '/_authenticated'
     | '/auth'
     | '/_authenticated/attendance'
+    | '/_authenticated/attendance/dashboard'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -101,15 +112,38 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedAttendanceRouteRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
+    '/_authenticated/attendance/dashboard': {
+      id: '/_authenticated/attendance/dashboard'
+      path: '/dashboard'
+      fullPath: '/attendance/dashboard'
+      preLoaderRoute: typeof AuthenticatedAttendanceDashboardRouteImport
+      parentRoute: typeof AuthenticatedAttendanceRouteRoute
+    }
   }
 }
 
+interface AuthenticatedAttendanceRouteRouteChildren {
+  AuthenticatedAttendanceDashboardRoute: typeof AuthenticatedAttendanceDashboardRoute
+}
+
+const AuthenticatedAttendanceRouteRouteChildren: AuthenticatedAttendanceRouteRouteChildren =
+  {
+    AuthenticatedAttendanceDashboardRoute:
+      AuthenticatedAttendanceDashboardRoute,
+  }
+
+const AuthenticatedAttendanceRouteRouteWithChildren =
+  AuthenticatedAttendanceRouteRoute._addFileChildren(
+    AuthenticatedAttendanceRouteRouteChildren,
+  )
+
 interface AuthenticatedRouteRouteChildren {
-  AuthenticatedAttendanceRouteRoute: typeof AuthenticatedAttendanceRouteRoute
+  AuthenticatedAttendanceRouteRoute: typeof AuthenticatedAttendanceRouteRouteWithChildren
 }
 
 const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
-  AuthenticatedAttendanceRouteRoute: AuthenticatedAttendanceRouteRoute,
+  AuthenticatedAttendanceRouteRoute:
+    AuthenticatedAttendanceRouteRouteWithChildren,
 }
 
 const AuthenticatedRouteRouteWithChildren =
