@@ -201,7 +201,7 @@ function ManualEntry({ emps }: { emps: { id: string; full_name: string; employee
     e.preventDefault();
     setBusy(true);
     const { error } = await supabase.rpc("manual_attendance", {
-      _employee_id: f.emp, _work_date: f.date, _check_in: f.ci, _check_out: f.co || undefined as unknown as string, _reason: f.reason,
+      _employee_id: f.emp, _work_date: f.date, _check_in: f.ci, _check_out: (f.co || null) as unknown as string, _reason: f.reason,
     });
     setBusy(false);
     if (error) { toast.error(errMsg(error)); return; }
