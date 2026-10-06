@@ -13,6 +13,7 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
 import { Route as AuthRouteImport } from './routes/auth'
 import { Route as AuthenticatedAttendanceRouteRouteImport } from './routes/_authenticated/attendance/route'
+import { Route as AuthenticatedAttendanceCheckInRouteImport } from './routes/_authenticated/attendance/check-in'
 import { Route as AuthenticatedAttendanceDashboardRouteImport } from './routes/_authenticated/attendance/dashboard'
 
 const IndexRoute = IndexRouteImport.update({
@@ -35,6 +36,12 @@ const AuthenticatedAttendanceRouteRoute =
     path: '/attendance',
     getParentRoute: () => AuthenticatedRouteRoute,
   } as any)
+const AuthenticatedAttendanceCheckInRoute =
+  AuthenticatedAttendanceCheckInRouteImport.update({
+    id: '/check-in',
+    path: '/check-in',
+    getParentRoute: () => AuthenticatedAttendanceRouteRoute,
+  } as any)
 const AuthenticatedAttendanceDashboardRoute =
   AuthenticatedAttendanceDashboardRouteImport.update({
     id: '/dashboard',
@@ -46,12 +53,14 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
   '/attendance': typeof AuthenticatedAttendanceRouteRouteWithChildren
+  '/attendance/check-in': typeof AuthenticatedAttendanceCheckInRoute
   '/attendance/dashboard': typeof AuthenticatedAttendanceDashboardRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
   '/attendance': typeof AuthenticatedAttendanceRouteRouteWithChildren
+  '/attendance/check-in': typeof AuthenticatedAttendanceCheckInRoute
   '/attendance/dashboard': typeof AuthenticatedAttendanceDashboardRoute
 }
 export interface FileRoutesById {
@@ -60,19 +69,31 @@ export interface FileRoutesById {
   '/_authenticated': typeof AuthenticatedRouteRouteWithChildren
   '/auth': typeof AuthRoute
   '/_authenticated/attendance': typeof AuthenticatedAttendanceRouteRouteWithChildren
+  '/_authenticated/attendance/check-in': typeof AuthenticatedAttendanceCheckInRoute
   '/_authenticated/attendance/dashboard': typeof AuthenticatedAttendanceDashboardRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/auth' | '/attendance' | '/attendance/dashboard'
+  fullPaths:
+    | '/'
+    | '/auth'
+    | '/attendance'
+    | '/attendance/check-in'
+    | '/attendance/dashboard'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/auth' | '/attendance' | '/attendance/dashboard'
+  to:
+    | '/'
+    | '/auth'
+    | '/attendance'
+    | '/attendance/check-in'
+    | '/attendance/dashboard'
   id:
     | '__root__'
     | '/'
     | '/_authenticated'
     | '/auth'
     | '/_authenticated/attendance'
+    | '/_authenticated/attendance/check-in'
     | '/_authenticated/attendance/dashboard'
   fileRoutesById: FileRoutesById
 }
@@ -112,6 +133,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedAttendanceRouteRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
+    '/_authenticated/attendance/check-in': {
+      id: '/_authenticated/attendance/check-in'
+      path: '/check-in'
+      fullPath: '/attendance/check-in'
+      preLoaderRoute: typeof AuthenticatedAttendanceCheckInRouteImport
+      parentRoute: typeof AuthenticatedAttendanceRouteRoute
+    }
     '/_authenticated/attendance/dashboard': {
       id: '/_authenticated/attendance/dashboard'
       path: '/dashboard'
@@ -123,11 +151,13 @@ declare module '@tanstack/react-router' {
 }
 
 interface AuthenticatedAttendanceRouteRouteChildren {
+  AuthenticatedAttendanceCheckInRoute: typeof AuthenticatedAttendanceCheckInRoute
   AuthenticatedAttendanceDashboardRoute: typeof AuthenticatedAttendanceDashboardRoute
 }
 
 const AuthenticatedAttendanceRouteRouteChildren: AuthenticatedAttendanceRouteRouteChildren =
   {
+    AuthenticatedAttendanceCheckInRoute: AuthenticatedAttendanceCheckInRoute,
     AuthenticatedAttendanceDashboardRoute:
       AuthenticatedAttendanceDashboardRoute,
   }
