@@ -36,7 +36,7 @@ function CorrectionsPage() {
     const note = approve ? "Approved" : window.prompt("Reason for rejection?") ?? "";
     if (!approve && !note) return;
     const { error } = await supabase.rpc("review_correction", { _id: id, _approve: approve, _note: note });
-    if (error) return toast.error(errMsg(error));
+    if (error) { toast.error(errMsg(error)); return; }
     toast.success(approve ? "Correction approved — new event recorded, original kept" : "Correction rejected");
     qc.invalidateQueries({ queryKey: ["att"] });
   }
@@ -92,7 +92,7 @@ function RequestDialog({ emps, tz }: { emps: { id: string; full_name: string; em
     const { error } = await supabase.rpc("request_correction", {
       _employee_id: f.emp, _work_date: f.date, _type: f.type, _original_event_id: (f.event || null) as string, _requested_time: f.time, _reason: f.reason,
     });
-    if (error) return toast.error(errMsg(error));
+    if (error) { toast.error(errMsg(error)); return; }
     toast.success("Correction requested");
     setOpen(false);
     setF({ emp: "", date: "", type: "MISSING_CHECK_OUT", event: "", time: "", reason: "" });

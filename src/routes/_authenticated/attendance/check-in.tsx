@@ -62,15 +62,11 @@ function CheckInPage() {
     if (method === "GPS" && (gps === null || gps === "unavailable")) { toast.error("LOCATION NOT AVAILABLE"); return; }
     setBusy(type);
     const g = method === "GPS" && gps && gps !== "unavailable" ? gps : null;
-    const { data, error } = await supabase.rpc("attendance_punch", {
-      _employee_id: empId,
-      _event_type: type,
-      _source: method,
-      _lat: g?.lat ?? undefined,
-      _lng: g?.lng ?? undefined,
-      _accuracy: g?.acc ?? undefined,
-      _location_id: method === "GPS" && locId ? locId : undefined,
-    });
+    const args: { _employee_id: string; _event_type: string; _source: string; _lat?: number; _lng?: number; _accuracy?: number; _location_id?: string } =
+      { _employee_id: empId, _event_type: type, _source: method };
+    if (g) { args._lat = g.lat; args._lng = g.lng; args._accuracy = g.acc; }
+    if (method === "GPS" && locId) args._location_id = locId;
+    const { data, error } = await supabase.rpc("attendance_punch", args);
     setBusy(null);
     if (error) { toast.error(errMsg(error)); return; }
     toast.success(`${type.replace("_", " ").toLowerCase()} recorded at ${fmtTime((data as { occurred_at: string }).occurred_at, app.tz)} (server time)`);

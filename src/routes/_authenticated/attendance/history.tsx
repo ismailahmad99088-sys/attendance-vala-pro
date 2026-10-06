@@ -20,7 +20,7 @@ function shiftDate(d: string, days: number) {
 function avgTime(isos: string[], tz: string) {
   if (!isos.length) return "—";
   const mins = isos.map((i) => {
-    const [h, m] = fmtTime(i, tz).split(":").map(Number); return h * 60 + m;
+    const [h, m] = fmtTime(i, tz).split(":").map(Number); return (h ?? 0) * 60 + (m ?? 0);
   });
   const a = Math.round(mins.reduce((x, y) => x + y, 0) / mins.length);
   return `${String(Math.floor(a / 60)).padStart(2, "0")}:${String(a % 60).padStart(2, "0")}`;

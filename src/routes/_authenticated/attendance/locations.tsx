@@ -31,7 +31,7 @@ function LocationsPage() {
     const { id, ...v } = edit;
     const vals = { ...v, address: v.address || null, latitude: v.latitude === "" ? null : Number(v.latitude), longitude: v.longitude === "" ? null : Number(v.longitude) };
     const res = id ? await supabase.from("attendance_locations").update(vals).eq("id", id) : await supabase.from("attendance_locations").insert(vals);
-    if (res.error) return toast.error(errMsg(res.error));
+    if (res.error) { toast.error(errMsg(res.error)); return; }
     toast.success("Location saved");
     setEdit(null);
     qc.invalidateQueries({ queryKey: ["att"] });

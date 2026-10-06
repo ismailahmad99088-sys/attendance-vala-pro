@@ -17,7 +17,7 @@ export const Route = createFileRoute("/auth")({
       { property: "og:description", content: "Secure licensed sign-in for Attendance Vala." },
     ],
   }),
-  validateSearch: (s: Record<string, unknown>) => ({ expired: s.expired === "1" ? "1" : undefined }),
+  validateSearch: (s: Record<string, unknown>): { expired?: string } => (s["expired"] === "1" ? { expired: "1" } : {}),
   component: AuthPage,
 });
 

@@ -29,7 +29,7 @@ function DevicesPage() {
     e.preventDefault();
     if (!f) return;
     const { error } = await supabase.from("attendance_devices").insert({ ...f, location_id: f.location_id || null, connection_ref: f.connection_ref || null });
-    if (error) return toast.error(errMsg(error));
+    if (error) { toast.error(errMsg(error)); return; }
     toast.success("Device registered as NOT_CONFIGURED until a real integration reports in");
     setF(null);
     qc.invalidateQueries({ queryKey: ["att"] });

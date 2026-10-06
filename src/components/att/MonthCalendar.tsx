@@ -19,7 +19,7 @@ export function MonthCalendar({ employeeId, tz }: { employeeId: string; tz: stri
   const today = todayIn(tz);
   const [month, setMonth] = useState(ym(today));
   const [open, setOpen] = useState<string | null>(null);
-  const [y, m] = month.split("-").map(Number);
+  const [y = 2000, m = 1] = month.split("-").map(Number);
   const first = `${month}-01`;
   const lastDay = new Date(Date.UTC(y, m, 0)).getUTCDate();
   const last = `${month}-${String(lastDay).padStart(2, "0")}`;
@@ -82,7 +82,7 @@ export function MonthCalendar({ employeeId, tz }: { employeeId: string; tz: stri
       </div>
       <div className="mt-3 flex flex-wrap gap-3 text-[11px] text-muted-foreground">
         {["PRESENT", "LATE", "EARLY_CHECKOUT", "OVERTIME", "ABSENT", "MISSING_CHECKOUT", "NOT_MARKED"].map((s) => (
-          <span key={s} className="flex items-center gap-1"><span className={cn("h-2 w-2 rounded-full", DOT[s])} />{STATUS_META[s].label}</span>
+          <span key={s} className="flex items-center gap-1"><span className={cn("h-2 w-2 rounded-full", DOT[s])} />{STATUS_META[s]?.label}</span>
         ))}
       </div>
       <Dialog open={!!open} onOpenChange={(o) => !o && setOpen(null)}>

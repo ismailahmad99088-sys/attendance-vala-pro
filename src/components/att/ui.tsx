@@ -27,9 +27,9 @@ export function PageHeader({ title, sub, actions }: { title: string; sub?: React
 export function StatCard({
   label, value, hint, tone = "default", onClick, active,
 }: {
-  label: string; value: ReactNode; hint?: string;
+  label: string; value: ReactNode; hint?: string | undefined;
   tone?: "default" | "success" | "warning" | "danger" | "info" | "violet";
-  onClick?: () => void; active?: boolean;
+  onClick?: (() => void) | undefined; active?: boolean | undefined;
 }) {
   const bar = {
     default: "bg-foreground/30", success: "bg-success", warning: "bg-warning",

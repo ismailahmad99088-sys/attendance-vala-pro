@@ -31,7 +31,7 @@ function RulesPage() {
     if (!edit) return;
     const { id, ...vals } = edit;
     const res = id ? await supabase.from("attendance_rules").update({ ...vals, updated_at: new Date().toISOString() }).eq("id", id) : await supabase.from("attendance_rules").insert(vals);
-    if (res.error) return toast.error(errMsg(res.error));
+    if (res.error) { toast.error(errMsg(res.error)); return; }
     toast.success("Rule saved");
     setEdit(null);
     qc.invalidateQueries({ queryKey: ["att"] });

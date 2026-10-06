@@ -27,7 +27,7 @@ function SettingsPage() {
   async function save(e: React.FormEvent) {
     e.preventDefault();
     const { error } = await supabase.from("org_settings").update({ ...f, updated_at: new Date().toISOString() }).eq("id", 1);
-    if (error) return toast.error(errMsg(error));
+    if (error) { toast.error(errMsg(error)); return; }
     toast.success("Settings saved");
     qc.invalidateQueries();
   }

@@ -102,7 +102,7 @@ export async function fetchEmployees() {
 
 export function downloadCsv(filename: string, rows: Record<string, unknown>[]) {
   if (rows.length === 0) return;
-  const headers = Object.keys(rows[0]);
+  const headers = Object.keys(rows[0]!);
   const esc = (v: unknown) => {
     const s = v == null ? "" : String(v);
     return /[",\n]/.test(s) ? `"${s.replace(/"/g, '""')}"` : s;
