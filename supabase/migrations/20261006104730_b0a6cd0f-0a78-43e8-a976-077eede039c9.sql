@@ -1,0 +1,11 @@
+revoke execute on all functions in schema public from anon, public;
+revoke execute on function public.write_audit(text,text,text,jsonb) from authenticated;
+revoke execute on function public.audit_table_change() from authenticated;
+revoke execute on function public.verify_license(text,text) from authenticated;
+grant execute on function public.has_role(uuid, public.app_role) to authenticated;
+grant execute on function public.can_view_all(uuid) to authenticated;
+grant execute on function public.is_operator(uuid) to authenticated;
+grant execute on function public.is_att_admin(uuid) to authenticated;
+grant execute on function public.can_approve(uuid) to authenticated;
+grant execute on function public.org_today() to authenticated;
+alter default privileges in schema public revoke execute on functions from anon, public;
