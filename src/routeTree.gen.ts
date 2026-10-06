@@ -13,8 +13,14 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
 import { Route as AuthRouteImport } from './routes/auth'
 import { Route as AuthenticatedAttendanceRouteRouteImport } from './routes/_authenticated/attendance/route'
+import { Route as AuthenticatedAttendanceCalendarRouteImport } from './routes/_authenticated/attendance/calendar'
 import { Route as AuthenticatedAttendanceCheckInRouteImport } from './routes/_authenticated/attendance/check-in'
+import { Route as AuthenticatedAttendanceCorrectionsRouteImport } from './routes/_authenticated/attendance/corrections'
 import { Route as AuthenticatedAttendanceDashboardRouteImport } from './routes/_authenticated/attendance/dashboard'
+import { Route as AuthenticatedAttendanceHistoryRouteImport } from './routes/_authenticated/attendance/history'
+import { Route as AuthenticatedAttendanceTodayRouteImport } from './routes/_authenticated/attendance/today'
+import { Route as AuthenticatedAttendanceEmployeesIndexRouteImport } from './routes/_authenticated/attendance/employees.index'
+import { Route as AuthenticatedAttendanceEmployeesIdRouteImport } from './routes/_authenticated/attendance/employees.$id'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -36,10 +42,22 @@ const AuthenticatedAttendanceRouteRoute =
     path: '/attendance',
     getParentRoute: () => AuthenticatedRouteRoute,
   } as any)
+const AuthenticatedAttendanceCalendarRoute =
+  AuthenticatedAttendanceCalendarRouteImport.update({
+    id: '/calendar',
+    path: '/calendar',
+    getParentRoute: () => AuthenticatedAttendanceRouteRoute,
+  } as any)
 const AuthenticatedAttendanceCheckInRoute =
   AuthenticatedAttendanceCheckInRouteImport.update({
     id: '/check-in',
     path: '/check-in',
+    getParentRoute: () => AuthenticatedAttendanceRouteRoute,
+  } as any)
+const AuthenticatedAttendanceCorrectionsRoute =
+  AuthenticatedAttendanceCorrectionsRouteImport.update({
+    id: '/corrections',
+    path: '/corrections',
     getParentRoute: () => AuthenticatedAttendanceRouteRoute,
   } as any)
 const AuthenticatedAttendanceDashboardRoute =
@@ -48,20 +66,56 @@ const AuthenticatedAttendanceDashboardRoute =
     path: '/dashboard',
     getParentRoute: () => AuthenticatedAttendanceRouteRoute,
   } as any)
+const AuthenticatedAttendanceHistoryRoute =
+  AuthenticatedAttendanceHistoryRouteImport.update({
+    id: '/history',
+    path: '/history',
+    getParentRoute: () => AuthenticatedAttendanceRouteRoute,
+  } as any)
+const AuthenticatedAttendanceTodayRoute =
+  AuthenticatedAttendanceTodayRouteImport.update({
+    id: '/today',
+    path: '/today',
+    getParentRoute: () => AuthenticatedAttendanceRouteRoute,
+  } as any)
+const AuthenticatedAttendanceEmployeesIndexRoute =
+  AuthenticatedAttendanceEmployeesIndexRouteImport.update({
+    id: '/employees/',
+    path: '/employees/',
+    getParentRoute: () => AuthenticatedAttendanceRouteRoute,
+  } as any)
+const AuthenticatedAttendanceEmployeesIdRoute =
+  AuthenticatedAttendanceEmployeesIdRouteImport.update({
+    id: '/employees/$id',
+    path: '/employees/$id',
+    getParentRoute: () => AuthenticatedAttendanceRouteRoute,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
   '/attendance': typeof AuthenticatedAttendanceRouteRouteWithChildren
+  '/attendance/calendar': typeof AuthenticatedAttendanceCalendarRoute
   '/attendance/check-in': typeof AuthenticatedAttendanceCheckInRoute
+  '/attendance/corrections': typeof AuthenticatedAttendanceCorrectionsRoute
   '/attendance/dashboard': typeof AuthenticatedAttendanceDashboardRoute
+  '/attendance/history': typeof AuthenticatedAttendanceHistoryRoute
+  '/attendance/today': typeof AuthenticatedAttendanceTodayRoute
+  '/attendance/employees/$id': typeof AuthenticatedAttendanceEmployeesIdRoute
+  '/attendance/employees/': typeof AuthenticatedAttendanceEmployeesIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
   '/attendance': typeof AuthenticatedAttendanceRouteRouteWithChildren
+  '/attendance/calendar': typeof AuthenticatedAttendanceCalendarRoute
   '/attendance/check-in': typeof AuthenticatedAttendanceCheckInRoute
+  '/attendance/corrections': typeof AuthenticatedAttendanceCorrectionsRoute
   '/attendance/dashboard': typeof AuthenticatedAttendanceDashboardRoute
+  '/attendance/history': typeof AuthenticatedAttendanceHistoryRoute
+  '/attendance/today': typeof AuthenticatedAttendanceTodayRoute
+  '/attendance/employees/$id': typeof AuthenticatedAttendanceEmployeesIdRoute
+  '/attendance/employees': typeof AuthenticatedAttendanceEmployeesIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -69,8 +123,14 @@ export interface FileRoutesById {
   '/_authenticated': typeof AuthenticatedRouteRouteWithChildren
   '/auth': typeof AuthRoute
   '/_authenticated/attendance': typeof AuthenticatedAttendanceRouteRouteWithChildren
+  '/_authenticated/attendance/calendar': typeof AuthenticatedAttendanceCalendarRoute
   '/_authenticated/attendance/check-in': typeof AuthenticatedAttendanceCheckInRoute
+  '/_authenticated/attendance/corrections': typeof AuthenticatedAttendanceCorrectionsRoute
   '/_authenticated/attendance/dashboard': typeof AuthenticatedAttendanceDashboardRoute
+  '/_authenticated/attendance/history': typeof AuthenticatedAttendanceHistoryRoute
+  '/_authenticated/attendance/today': typeof AuthenticatedAttendanceTodayRoute
+  '/_authenticated/attendance/employees/$id': typeof AuthenticatedAttendanceEmployeesIdRoute
+  '/_authenticated/attendance/employees/': typeof AuthenticatedAttendanceEmployeesIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -78,23 +138,41 @@ export interface FileRouteTypes {
     | '/'
     | '/auth'
     | '/attendance'
+    | '/attendance/calendar'
     | '/attendance/check-in'
+    | '/attendance/corrections'
     | '/attendance/dashboard'
+    | '/attendance/history'
+    | '/attendance/today'
+    | '/attendance/employees/$id'
+    | '/attendance/employees/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
     | '/auth'
     | '/attendance'
+    | '/attendance/calendar'
     | '/attendance/check-in'
+    | '/attendance/corrections'
     | '/attendance/dashboard'
+    | '/attendance/history'
+    | '/attendance/today'
+    | '/attendance/employees/$id'
+    | '/attendance/employees'
   id:
     | '__root__'
     | '/'
     | '/_authenticated'
     | '/auth'
     | '/_authenticated/attendance'
+    | '/_authenticated/attendance/calendar'
     | '/_authenticated/attendance/check-in'
+    | '/_authenticated/attendance/corrections'
     | '/_authenticated/attendance/dashboard'
+    | '/_authenticated/attendance/history'
+    | '/_authenticated/attendance/today'
+    | '/_authenticated/attendance/employees/$id'
+    | '/_authenticated/attendance/employees/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -133,11 +211,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedAttendanceRouteRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
+    '/_authenticated/attendance/calendar': {
+      id: '/_authenticated/attendance/calendar'
+      path: '/calendar'
+      fullPath: '/attendance/calendar'
+      preLoaderRoute: typeof AuthenticatedAttendanceCalendarRouteImport
+      parentRoute: typeof AuthenticatedAttendanceRouteRoute
+    }
     '/_authenticated/attendance/check-in': {
       id: '/_authenticated/attendance/check-in'
       path: '/check-in'
       fullPath: '/attendance/check-in'
       preLoaderRoute: typeof AuthenticatedAttendanceCheckInRouteImport
+      parentRoute: typeof AuthenticatedAttendanceRouteRoute
+    }
+    '/_authenticated/attendance/corrections': {
+      id: '/_authenticated/attendance/corrections'
+      path: '/corrections'
+      fullPath: '/attendance/corrections'
+      preLoaderRoute: typeof AuthenticatedAttendanceCorrectionsRouteImport
       parentRoute: typeof AuthenticatedAttendanceRouteRoute
     }
     '/_authenticated/attendance/dashboard': {
@@ -147,19 +239,62 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedAttendanceDashboardRouteImport
       parentRoute: typeof AuthenticatedAttendanceRouteRoute
     }
+    '/_authenticated/attendance/history': {
+      id: '/_authenticated/attendance/history'
+      path: '/history'
+      fullPath: '/attendance/history'
+      preLoaderRoute: typeof AuthenticatedAttendanceHistoryRouteImport
+      parentRoute: typeof AuthenticatedAttendanceRouteRoute
+    }
+    '/_authenticated/attendance/today': {
+      id: '/_authenticated/attendance/today'
+      path: '/today'
+      fullPath: '/attendance/today'
+      preLoaderRoute: typeof AuthenticatedAttendanceTodayRouteImport
+      parentRoute: typeof AuthenticatedAttendanceRouteRoute
+    }
+    '/_authenticated/attendance/employees/': {
+      id: '/_authenticated/attendance/employees/'
+      path: '/employees'
+      fullPath: '/attendance/employees/'
+      preLoaderRoute: typeof AuthenticatedAttendanceEmployeesIndexRouteImport
+      parentRoute: typeof AuthenticatedAttendanceRouteRoute
+    }
+    '/_authenticated/attendance/employees/$id': {
+      id: '/_authenticated/attendance/employees/$id'
+      path: '/employees/$id'
+      fullPath: '/attendance/employees/$id'
+      preLoaderRoute: typeof AuthenticatedAttendanceEmployeesIdRouteImport
+      parentRoute: typeof AuthenticatedAttendanceRouteRoute
+    }
   }
 }
 
 interface AuthenticatedAttendanceRouteRouteChildren {
+  AuthenticatedAttendanceCalendarRoute: typeof AuthenticatedAttendanceCalendarRoute
   AuthenticatedAttendanceCheckInRoute: typeof AuthenticatedAttendanceCheckInRoute
+  AuthenticatedAttendanceCorrectionsRoute: typeof AuthenticatedAttendanceCorrectionsRoute
   AuthenticatedAttendanceDashboardRoute: typeof AuthenticatedAttendanceDashboardRoute
+  AuthenticatedAttendanceHistoryRoute: typeof AuthenticatedAttendanceHistoryRoute
+  AuthenticatedAttendanceTodayRoute: typeof AuthenticatedAttendanceTodayRoute
+  AuthenticatedAttendanceEmployeesIdRoute: typeof AuthenticatedAttendanceEmployeesIdRoute
+  AuthenticatedAttendanceEmployeesIndexRoute: typeof AuthenticatedAttendanceEmployeesIndexRoute
 }
 
 const AuthenticatedAttendanceRouteRouteChildren: AuthenticatedAttendanceRouteRouteChildren =
   {
+    AuthenticatedAttendanceCalendarRoute: AuthenticatedAttendanceCalendarRoute,
     AuthenticatedAttendanceCheckInRoute: AuthenticatedAttendanceCheckInRoute,
+    AuthenticatedAttendanceCorrectionsRoute:
+      AuthenticatedAttendanceCorrectionsRoute,
     AuthenticatedAttendanceDashboardRoute:
       AuthenticatedAttendanceDashboardRoute,
+    AuthenticatedAttendanceHistoryRoute: AuthenticatedAttendanceHistoryRoute,
+    AuthenticatedAttendanceTodayRoute: AuthenticatedAttendanceTodayRoute,
+    AuthenticatedAttendanceEmployeesIdRoute:
+      AuthenticatedAttendanceEmployeesIdRoute,
+    AuthenticatedAttendanceEmployeesIndexRoute:
+      AuthenticatedAttendanceEmployeesIndexRoute,
   }
 
 const AuthenticatedAttendanceRouteRouteWithChildren =
